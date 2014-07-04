@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'widget_tweaks',
     'orcamento'
 )
 
@@ -86,6 +87,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, '../templates')
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
 )
+
+TEMPLATE_DIRS = (
+    os.path.join(os.path.dirname(__file__), '../templates')
+)
+
+PERM_GRUPO_ADMINISTRADOR = 'Administrador'
+PERM_GRUPO_VENDEDOR = 'Vendedor'

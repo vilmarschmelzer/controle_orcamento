@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block menu %}
+    {% if user %}
+        {% for group in user.groups.all %}
+            {% if group.name == 'Administrador' %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        Administração
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="/admin/vendedores/" class="addlink">Vendedores</a>
+                        </li>
+                        <li>
+                            <a href="/admin/add/vendedor/" class="addlink">Adicionar vendedor</a>
+                        </li>
+                    </ul>
+                </li>
+            {% endif %}
+
+            {% if group.name == 'Vendedor' %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        Orçamento
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="/orcamento/criar/" class="addlink">Criar</a>
+                        </li>
+                        <li>
+                            <a href="/orcamento/consultar/" class="addlink">Consultar</a>
+                        </li>
+                    </ul>
+                </li>
+            {% endif %}
+
+        {% endfor %}
+    {% endif %} 
+{% endblock %}
+
+{% block menuuser %}
+    {% include "login_logout.html" %}
+{% endblock %}
+
+{% block content %}
+
+{% endblock %}
+
