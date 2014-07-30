@@ -4,11 +4,9 @@
 {% endblock %}
 
 {% block menuuser %}
-	<a href="/" style="margin-right:5px;" class="btn btn-default navbar-btn">Sair</a>
 {% endblock %}
 
 {% block content %}
-    {{ PERM_GRUPO_ADM }}
 	<form method="post" class="form-horizontal" action="{% url 'django.contrib.auth.views.login' %}">
 		{% csrf_token %}
 		{% if form.errors %}
@@ -26,7 +24,7 @@
 		{% if url_next %}
 			<input type="hidden" name="next" value="{% url url_next %}" />
 		{% else %}
-			<input type="hidden" name="next" value="{% url 'orcamento.views.controle.index' %}" />
+			<input type="hidden" name="next" value="{% url 'app_orcamento.views.controle.index' %}" />
 		{% endif %}
 	</form>
 {% endblock %}

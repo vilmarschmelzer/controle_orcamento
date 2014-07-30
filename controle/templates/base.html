@@ -9,9 +9,10 @@
 
         <script src="{{ STATIC_URL }}js/jquery.js"></script>
         <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+        <script src="{{ STATIC_URL }}js/orcamento.js"></script>
     </head>
     <body>
-        <div class="row" style="margin-left: 5px; margin-right: 5px;">
+        <header class="row">
             <div class="navbar navbar-default">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
@@ -33,15 +34,16 @@
                     </ul>
                 </div>
             </div>
-        </div>
+        </header>
 
         <section class="container" data-spy="scroll">
-            <div class="container">
-                {% block content %}
-                {% endblock %}
-            </div>
+            {% block content %}
+            {% endblock %}
         </section>
-        <footer class="container" style="margin-top:25px;">
+        <footer class="row">
+            <div class="navbar-header">
+                Desenvolvido por Vilmar Schmelzer
+            </div>
         </footer>
     </body>
 </html>
