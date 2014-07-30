@@ -1,0 +1,3 @@
+from ajaxable_response_mixin import AjaxableResponseMixin
+from produto import ProdutoView, ProdutoListView, ProdutoListAjaxView
+from cliente import ClienteListAjaxView, ClienteListView
