@@ -1,0 +1,11 @@
+{% extends "controle/index.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+	<ol class="breadcrumb">
+		<li><a href="/">Home</a></li>
+		<li class="active"><strong>Cadastro de cliente</strong></li>
+	</ol>
+    {% include "cliente/form_cliente.html" with url_salvar="/cliente/salvar/" %}
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "controle/index.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+	<ol class="breadcrumb">
+		<li><a href="/">Home</a></li>
+		<li class="active"><strong>Cadastro de produto</strong></li>
+	</ol>
+	{% if form.id %}
+	    <form method="post" class="form-horizontal" action="/produto/salvar/{{ form.id }}/">
+	{% else %}
+	    <form method="post" class="form-horizontal" action="/produto/salvar/">
+	{% endif %}
+		{% csrf_token %}
+		{% include "field.html" with field=form.nome label='Nome' tm_label=2 tm_field=3 %}
+		{% include "field.html" with field=form.descricao label='Descrição' tm_label=2 tm_field=3 %}
+        {% include "field.html" with field=form.valor label='Valor' tm_label=2 tm_field=3 %}
+        {% if form.id %}
+            {% include "field.html" with field=form.ativo label='Ativo' tm_label=2 tm_field=3 %}
+        {% endif %}
+		<div class="form-group">
+			<div class="col-md-3 col-md-offset-2">
+				<button type="submit" class="btn btn-default pull-right" name="salvar"><span class="glyphicon glyphicon-floppy-disk"></span> Salvar</button>
+			</div>
+		</div>
+	</form>
+{% endblock %}

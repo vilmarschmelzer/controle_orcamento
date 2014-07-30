@@ -1,0 +1,37 @@
+{% extends "controle/index.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+	<ol class="breadcrumb">
+		<li><a href="/">Home</a></li>
+		<li class="active"><strong>Orçamento</strong></li>
+	</ol>
+    {% include "cliente/modal_consulta.html" with form=formPesquisa %}
+    {% include "produto/modal_consulta.html" with form=formPesquisa %}
+
+    {% if form.id.value > 0 %}
+	    <form id="formOrcamento" method="post" class="form-horizontal" action="/orcamento/salvar/{{ form.id.value }}/">
+	{% else %}
+        <form id="formOrcamento" method="post" class="form-horizontal" action="/orcamento/salvar/">
+    {% endif %}
+    {% csrf_token %}
+        {% include "orcamento/fields_orcamento.html" %}
+	</form>
+    {% include "orcamento/form_produto.html" %}
+    <div class="row">
+        <div id="produtos" class="col-md-6">
+            {% include "orcamento/produtos.html" %}
+        </div>
+    </div>
+	<!-- Salvar -->
+	<div class="row">
+
+        <div class="col-md-7">
+            {% if form.id.value > 0 %}
+			    <a href="/orcamento/print/{{ form.id.value }}/" class="btn btn-default pull-left">Imprimir</a>
+            {% endif %}
+
+			<a id="btn_salvar_cliente" onclick="salvar_orcamento();" class="btn btn-default pull-right">Salvar</a>
+		</div>
+	</div>
+{% endblock %}

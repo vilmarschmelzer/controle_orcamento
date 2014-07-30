@@ -1,0 +1,27 @@
+{% load widget_tweaks %}
+{% csrf_token %}
+{% if form.cliente.errors %}
+    <div class="form-group has-error">
+{% else %}
+    <div class="form-group">
+{% endif %}
+    <label class="col-sm-4 col-md-2 control-label">Cliente</label>
+    <div class="col-sm-4 col-md-4">
+        <div class="row">
+            <div class="col-md-10">
+                {{ form.cliente | add_class:"form-control"}}
+                <span class="help-block">
+                    {% if form.cliente.errors %}
+                        {{ form.cliente.errors.as_text }}
+                    {% endif %}
+                </span>
+            </div>
+            <a class="btn btn-default" onclick="modal_consulta_cliente();">
+                <span class="glyphicon glyphicon-search"></span>
+            </a>
+        </div>
+    </div>
+</div>
+{% include "field.html" with field=form.observacao label='Observação' tm_label=2 tm_field=4 %}
+{% include "field.html" with field=form.nr_dias_validade label='Nr dias valido' tm_label=2 tm_field=4 %}
+{% include "field.html" with field=form.aprovado label='Aprovado' tm_label=2 tm_field=4 %}

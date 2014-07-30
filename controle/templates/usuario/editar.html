@@ -1,0 +1,37 @@
+{% extends "controle/index.html" %}
+
+{% block content %}
+    <ol class="breadcrumb">
+		<li><a href="/">Home</a></li>
+        <li><a href="/admin/consulta/usuarios/">Consulta usuários</a></li>
+		<li class="active"><strong>Permissões do usuário</strong></li>
+	</ol>
+    {% if msg_erro %}
+	    <div class="alert alert-danger">
+		    {{ msg_erro }}
+	    </div>
+    {% endif %}
+    {{ usuario.first_name }} {{ usuario.last_name }}
+    <form method="post" class="form-horizontal" action="/admin/editar/usuario/{{ usuario.id }}/">
+        {% csrf_token %}
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" {{ usuario.checked }} name="ativo" value="{{ usuario.is_active }}" />Ativo
+            </label>
+        </div>
+        <label>Grupos:</label>
+		{% for grupo in grupos %}
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" {{ grupo.checked }} name="grupo" value="{{ grupo.id }}" />{{ grupo.name }}
+				</label>
+			</div>
+		{% endfor %}
+        <div class="row">
+            <div class="col-md-5">
+                <button type="submit" class="btn btn-default pull-right">Salvar</button>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}

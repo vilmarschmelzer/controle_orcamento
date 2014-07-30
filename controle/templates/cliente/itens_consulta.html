@@ -1,0 +1,33 @@
+<div class="list-group">
+   {% for cliente in clientes %}
+        <div class="list-group-item">
+            <h4 class="list-group-item-heading">{{ cliente.documento }} - {{ cliente.nome }}
+                <a href="#" onclick="select_cliente({{ cliente.documento }},'{{ cliente.nome }}');">
+                    <span class="glyphicon glyphicon-check pull-right" style="margin-left:10px;"></span>
+                </a>
+            </h4>
+        </div>
+   {% endfor %}
+</div>
+
+<ul class="pager">
+    <li class="previous">
+    {% if produtos.has_previous %}
+        {% if form.valor.value %}
+            <a href="#" onclick="consulta_cliente('?page={{ clientes.previous_page_number }}&valor={{form.valor.value}}');"> Anterior </a>
+        {% else %}
+            <a href="#" onclick="consulta_cliente('?page={{ clientes.previous_page_number }}');"> Anterior </a>
+        {% endif %}
+    {% endif %}
+    </li>
+
+    <li class="next">
+    {% if clientes.has_next %}
+        {% if form.valor.value %}
+            <a href="#" onclick="consulta_cliente('?page={{ clientes.next_page_number  }}&valor={{form.valor.value}}');"> Próxima </a>
+        {% else %}
+            <a href="#" onclick="consulta_cliente('?page={{ clientes.next_page_number  }}');"> Próxima </a>
+       {% endif %}
+    {% endif %}
+    </li>
+</ul>

@@ -1,0 +1,31 @@
+{% load widget_tweaks %}
+<div class="modal fade" id="modal_consulta_produto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Consulta de produto</h4>
+            </div>
+            <div class="modal-body">
+                <form id="form_consulta_produto" method="post" class="form-inline" onsubmit="return false">{% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <div class="input-group">
+                                {{ form.valor | add_class:"form-control" }}
+                                <span class="input-group-btn">
+                                    <a id="submit_consulta_produto" href="#" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div id="itens_consulta_produto">
+                    {% include "produto/itens_consulta.html" %}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

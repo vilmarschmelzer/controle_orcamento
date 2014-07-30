@@ -1,0 +1,20 @@
+<div class="list-group">
+	{% if orcamento.get_itens %}
+		{% for item in orcamento.get_itens %}
+			<div class="list-group-item">
+				<h4 class="list-group-item-heading">{{ item.produto.id }} - {{ item.produto.nome }} <small><b>(Vl.: {{ item.produto.valor}} Qtd.: {{item.quantidade}} Desc.: {{ item.vl_desconto }})</b></small>
+                    <a href="#" onclick="rm_produto({{item.produto.id}});"><span class="glyphicon glyphicon-trash pull-right"></span></a>
+                    <a href="#" onclick="edit_produto({{item.produto.id}});"><span class="glyphicon glyphicon-edit pull-right" style="margin-right: 10px;"></span></a>
+                </h4>
+
+			</div>
+		{% endfor %}
+	{% else %}
+		<div class="list-group-item">
+			<h4 class="list-group-item-heading">Adicione produtos</h4>
+		</div>
+	{% endif %}
+    Total produtos: {{ orcamento.get_total_produtos }}
+    Total desconto: {{ orcamento.get_total_desconto }}
+    <b>Total: {{ orcamento.get_total }}</b>
+</div>

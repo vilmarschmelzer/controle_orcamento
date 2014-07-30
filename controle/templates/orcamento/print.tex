@@ -1,0 +1,41 @@
+\documentclass[a4paper]{article}
+\usepackage[margin=1cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8x]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\renewcommand{\rmdefault}{phv} % Arial
+\renewcommand{\sfdefault}{phv} % Arial
+
+
+\head{
+\begin{table}
+\begin{tabular}{l p{11cm} p{3cm}}
+Orçamento: {{orcamento.id}} &  & Data: {{ orcamento.dt_criacao|date:"d/m/Y"  }} &
+CNPJ/CPF: {{ orcamento.cliente.documento }} & Nome: {{ orcamento.cliente.nome }} & &
+{% for contato in orcamento.cliente.get_contatos %}
+	{{contato.tipo_contato}}: {{contato.contato}} & & &
+{% endfor %}
+\end{tabular}
+\end{table}}
+
+\begin{document}
+\begin{table}
+\begin{tabular}{c|p{12cm}|r|r|r}                    					  \hline
+Código       & Nome       			& Valor unit. 	& Qtd. & Desconto\\\hline
+
+{% for item in orcamento.get_itens %}
+	{{ item.produto.id }} & {{item.produto.nome}} & {{item.vl_unitario}}  & {{item.quantidade}} & {{item.vl_desconto}}\\
+	& Obs: {{item.observacao}} & & & \\ \hline
+{% endfor %}
+\end{tabular}
+\end{table}}
+\begin{flushright}
+Total produtos: {{orcamento.get_total_produtos}}\\
+Total desconto: {{orcamento.get_total_desconto}}\\
+Total: {{orcamento.get_total}}
+\end{flushright}
+\end{document}

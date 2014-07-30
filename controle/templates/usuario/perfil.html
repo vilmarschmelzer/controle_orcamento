@@ -1,0 +1,35 @@
+{% extends "controle/index.html" %}
+{% load widget_tweaks %}
+
+
+{% block content %}
+    <ol class="breadcrumb">
+		<li><a href="/">Home</a></li>
+		<li class="active"><strong>Perfil</strong></li>
+	</ol>
+    {% if msg_erro %}
+	    <div class="alert alert-danger">
+		    {{ msg_erro }}
+	    </div>
+    {% endif %}
+    <form method="post" class="form-horizontal" action="/perfil/">
+        {% csrf_token %}
+		{% include "field.html" with field=form.nome label='Nome' tm_label=2 tm_field=3 %}
+        {% include "field.html" with field=form.sobrenome label='Sobrenome' tm_label=2 tm_field=3 %}
+        {% include "field.html" with field=form.email label='E-mail' tm_label=2 tm_field=3 %}
+        {% include "field.html" with field=form.usuario label='Usuário' tm_label=2 tm_field=3 %}
+        {% include "field.html" with field=form.senha label='Senha' tm_label=2 tm_field=3 %}
+        {% include "field.html" with field=form.nova_senha label='Nova senha' tm_label=2 tm_field=3 %}
+        {% include "field.html" with field=form.confirmar_senha label='Confirmar senha' tm_label=2 tm_field=3 %}
+
+        {% if form.ativo %}
+            {% include "field.html" with field=form.ativo label='Ativo' tm_label=2 tm_field=3 %}
+        {% endif %}
+        <div class="row">
+            <div class="col-md-5">
+                <button type="submit" class="btn btn-default pull-right">Salvar</button>
+            </div>
+        </div>
+	</form>
+
+{% endblock %}

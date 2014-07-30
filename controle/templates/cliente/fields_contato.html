@@ -1,0 +1,9 @@
+{% csrf_token %}
+{% include "field.html" with field=formContato.tipo_contato label='Tipo' tm_label=2 tm_field=3 %}
+{% include "field.html" with field=formContato.contato label='Numero' tm_label=2 tm_field=3 %}
+<div class="form-group">
+	<div class="col-md-5">
+		<a onclick="add_contato();" class="btn btn-default pull-right"><span class="glyphicon glyphicon-plus"></span>
+		Adicionar</a>
+	</div>
+</div>

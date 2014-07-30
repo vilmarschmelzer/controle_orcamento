@@ -1,0 +1,8 @@
+{% csrf_token %}
+{{ form.id }}
+<div id="field_{{ form.documento.name }}">
+	{% include "field.html" with field=form.documento label='CNPJ / CPF' tm_label=2 tm_field=3 %}
+</div>
+{% include "field.html" with field=form.nome label='Nome' tm_label=2 tm_field=3 %}
+<h4><b>Endereço</b></h4>
+{% include "cliente/endereco.html" %}

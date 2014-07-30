@@ -1,0 +1,13 @@
+<div class="list-group">
+	{% if contatos %}
+		{% for contato in contatos %}
+			<div class="list-group-item">
+				<h4 class="list-group-item-heading">{{ contato.contato }} <small>({{contato.tipo_contato}})</small><a href="#" onclick="rm_contato({{contato.index_contato}});"><span class="glyphicon glyphicon-remove-circle pull-right"></span></a></h4>
+			</div>
+		{% endfor %}
+	{% else %}
+		<div class="list-group-item">
+			<h4 class="list-group-item-heading">Adicione contatos</h4>
+		</div>
+	{% endif %}
+</div>

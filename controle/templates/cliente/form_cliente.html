@@ -1,0 +1,18 @@
+{% if form.id.value > 0 %}
+    <form id="formCliente" method="post" class="form-horizontal" action="{{ url_salvar }}{{ form.id.value }}/">
+{% else %}
+    <form id="formCliente" method="post" class="form-horizontal" action="{{ url_salvar }}">
+{% endif %}
+    {% include "cliente/fields_cliente.html" %}
+</form>
+{% include "cliente/form_contato.html" %}
+<div class="row">
+    <div id="contatos" class="col-md-5">
+        {% include "cliente/contatos.html" %}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-5">
+        <a id="btn_salvar_cliente" onclick="salvar_cliente();" class="btn btn-default pull-right">Salvar</a>
+    </div>
+</div>
