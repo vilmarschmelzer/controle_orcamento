@@ -1,6 +1,6 @@
 #coding: utf-8
 from django import forms
-from app_orcamento.models import Cliente, Estado, Cidade, Tipo_Contato
+from app_orcamento.models import Cliente, Estado, Cidade, TipoContato
 from utils.verificadorcpf import CPF
 from utils.verificadorcnpj import CNPJ
 from django.db.models import Q
@@ -50,7 +50,7 @@ class FormCliente(forms.Form):
 
         self.fields['cidade'] = forms.ModelChoiceField(widget=forms.Select(attrs={'id': 'cidade'}),
                                                        queryset=Cidade.objects.filter(estado_id=estado_id).all(),
-                                                       empty_label="Selecione um Cidade")
+                                                       empty_label="Selecione uma Cidade")
 
         self.fields['bairro'] = forms.CharField(max_length=200)
         self.fields['cep'] = forms.IntegerField()
@@ -78,7 +78,7 @@ class FormCliente(forms.Form):
 
 class FormContato(forms.Form):
 
-    tipo_contato = forms.ModelChoiceField(widget=forms.Select(attrs={'id': 'Tipo_Contato'}),
-                                          queryset=Tipo_Contato.objects.all(),
+    tipo_contato = forms.ModelChoiceField(widget=forms.Select(attrs={'id': 'TipoContato'}),
+                                          queryset=TipoContato.objects.all(),
                                           empty_label="Selecione um tipo de contato")
     contato = forms.CharField(max_length=200)

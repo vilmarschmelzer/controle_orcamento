@@ -19,10 +19,12 @@ def adicionar(request):
     if request.method == 'POST':
         form = FormSalvarUsuario(request.POST)
         if form.is_valid():
-            print request.POST.getlist('grupos')
-            if str(settings.PERM_GRUPO_ADMINISTRADOR) in request.POST.getlist('grupos') and not request.user.is_superuser:
+
+            if str(settings.PERM_GRUPO_ADMINISTRADOR) in request.POST.getlist('grupos') \
+                    and not request.user.is_superuser:
                 return render(request, 'usuario/adicionar.html',
-                              {	'form': form, 'msg_erro': 'Usuário logado não é "Super usuário", não será possui criar usuário com grupo "Administrador"'})
+                              {	'form': form, 'msg_erro': 'Usuário logado não é "Super usuário", '
+                                                             'não será possui criar usuário com grupo "Administrador"'})
 
             user = User.objects.create_user(request.POST['usuario'], request.POST['email'], request.POST['senha'])
 
@@ -70,7 +72,6 @@ def editar(request, user_id):
             user.save()
             return redirect('/admin/consulta/usuarios/')
 
-    print grupos_user
     grupos = Group.objects.all()
 
     for gp in grupos:
@@ -85,12 +86,6 @@ def editar(request, user_id):
         user.checked = ''
 
     return render(request, 'usuario/editar.html', {'usuario': user, 'grupos': grupos, 'msg_erro': msg_erro})
-
-
-@login_required
-def logout_user(request):
-    logout(request)
-    return redirect('/')
 
 
 @group_required(settings.PERM_GRUPO_ADMINISTRADOR)
@@ -132,7 +127,7 @@ def consulta(request):
     except:
         users_page = paginator.page(paginator.num_pages)
 
-    return render(request, 'usuario/consulta.html', {'form':form, 'usuarios': users_page})
+    return render(request, 'usuario/consulta.html', {'form': form, 'usuarios': users_page})
 
 
 @login_required

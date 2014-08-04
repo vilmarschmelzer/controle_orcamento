@@ -9,6 +9,7 @@ def pdflatex(file, type='pdf'):
                       '-output-format', type, file],
          cwd=dirname(file), stdout=PIPE, stderr=PIPE)
 
+
 def process_latex(source, type='pdf', outfile=None):
     
     tex = NamedTemporaryFile()

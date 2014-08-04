@@ -3,6 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
 from app_orcamento.models import Cidade
 
+
 @csrf_exempt
 def get_cidades(request):
 

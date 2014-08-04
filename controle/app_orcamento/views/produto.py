@@ -54,15 +54,16 @@ class ProdutoListAjaxView(AjaxableResponseMixin, View):
 
         produtos_page = Produto().get_page(page, valor)
         produtos_html = render_to_string(self.template_name, {'form': form, 'produtos': produtos_page})
-        produtos_html ='<script src="%sjs/orcamento.js"></script>%s' % (settings.STATIC_URL, produtos_html)
 
         context = {'produtos': unicode(produtos_html)}
         js = self.render_to_json_response(context)
         return js
 
+    @method_decorator(group_required(settings.PERM_GRUPO_ADMINISTRADOR, settings.PERM_GRUPO_VENDEDOR))
     def get(self, request):
         return self.__page(request)
 
+    @method_decorator(group_required(settings.PERM_GRUPO_ADMINISTRADOR, settings.PERM_GRUPO_VENDEDOR))
     def post(self, request):
         return self.__page(request)
 

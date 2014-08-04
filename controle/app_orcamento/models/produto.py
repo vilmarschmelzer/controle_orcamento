@@ -18,7 +18,18 @@ class Produto(models.Model):
         prods = Produto.objects.filter()
 
         if busca is not None:
-            prods = prods.filter(Q(nome__icontains=busca) | Q(descricao__icontains=busca))
+            if '%' in busca:
+                busca = busca.replace('%', '')
+                prods = prods.filter(Q(nome__icontains=busca) | Q(descricao__icontains=busca))
+            else:
+
+                try:
+                    id = int(busca)
+                    prods = prods.filter(Q(id=id))
+                except:
+                    prods = prods.filter(Q(nome=busca))
+
+
 
         prods = prods.order_by('nome')
         paginator = Paginator(prods, settings.NR_REGISTROS_PAGINA)

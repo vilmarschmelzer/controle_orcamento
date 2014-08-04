@@ -4,7 +4,7 @@ from django.db import transaction
 from django.conf import settings
 from app_orcamento.forms.pesquisa import FormPesquisa
 from app_orcamento.forms.cliente import FormCliente, FormContato
-from app_orcamento.models import Cliente, Endereco, Tipo_Contato, Contato
+from app_orcamento.models import Cliente, Endereco, TipoContato, Contato
 from django.views.decorators.csrf import csrf_exempt
 from django.template.loader import render_to_string
 from django.utils import simplejson
@@ -120,7 +120,7 @@ def add_contato(request):
         if form.is_valid():
 
             contato = Contato()
-            contato.tipo_contato = Tipo_Contato.objects.get(pk=request.POST['tipo_contato'])
+            contato.tipo_contato = TipoContato.objects.get(pk=request.POST['tipo_contato'])
             contato.contato = request.POST['contato']
             contato.index_contato = request.session['index_contato'] + 1
 
@@ -181,7 +181,6 @@ class ClienteListAjaxView(AjaxableResponseMixin, View):
         clientes_page = Cliente().get_page(page, valor)
 
         clientes_html = render_to_string('cliente/itens_consulta.html', {'form': form, 'clientes': clientes_page})
-        clientes_html ='<script src="%sjs/orcamento.js"></script>%s' % (settings.STATIC_URL, clientes_html)
 
         context = {'clientes': unicode(clientes_html)}
 
@@ -227,10 +226,10 @@ class ClienteListView(View):
         clientes_page = Cliente().get_page(page, valor)
         return render(request, self.template_name, {'form': form, 'clientes': clientes_page})
 
-    @method_decorator(group_required(settings.PERM_GRUPO_VENDEDOR))
+    @method_decorator(group_required(settings.PERM_GRUPO_VENDEDOR, settings.PERM_GRUPO_ADMINISTRADOR))
     def get(self, request):
         return self.__page(request)
 
-    @method_decorator(group_required(settings.PERM_GRUPO_VENDEDOR))
+    @method_decorator(group_required(settings.PERM_GRUPO_VENDEDOR, settings.PERM_GRUPO_ADMINISTRADOR))
     def post(self, request):
         return self.__page(request)

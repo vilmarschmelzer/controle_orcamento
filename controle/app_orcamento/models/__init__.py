@@ -5,6 +5,6 @@ from cliente import Cliente
 from endereco import Endereco
 from produto import Produto
 from orcamento import Orcamento
-from item_orcamento import Item_Orcamento
-from tipo_contato import Tipo_Contato
+from item_orcamento import ItemOrcamento
+from tipo_contato import TipoContato
 from contato import Contato

@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Tipo_Contato(models.Model):
+class TipoContato(models.Model):
     nome = models.CharField(max_length=100)
     mascara = models.CharField(max_length=100, null=True)
 

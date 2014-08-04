@@ -1,11 +1,11 @@
 # coding:utf-8
-from django.shortcuts import render, HttpResponse,RequestContext
+from django.shortcuts import render, HttpResponse, RequestContext
 from app_orcamento.permissoes import group_required
 from django.db import transaction
 from django.conf import settings
 from app_orcamento.forms.pesquisa import FormPesquisa
 from app_orcamento.forms.orcamento import FormOrcamento, FormItem
-from app_orcamento.models import Produto, Orcamento, Item_Orcamento, Cliente
+from app_orcamento.models import Produto, Orcamento, ItemOrcamento, Cliente
 from django.views.decorators.csrf import csrf_exempt
 from django.template.loader import render_to_string
 from django.utils import simplejson
@@ -55,7 +55,7 @@ def salvar(request, id=None):
                 item.save()
                 itens_ids.append(item.id)
 
-            Item_Orcamento.objects.filter(Q(orcamento_id=orcamento.id), ~Q(id__in=itens_ids)).delete()
+            ItemOrcamento.objects.filter(Q(orcamento_id=orcamento.id), ~Q(id__in=itens_ids)).delete()
 
             json = simplejson.dumps({'success': True, 'href': '/'}, ensure_ascii=False)
             return HttpResponse(json, mimetype='application/json')
@@ -65,7 +65,8 @@ def salvar(request, id=None):
             html_produtos = render_to_string('msg_erro.html', {'msg': 'Adicione pelo menos um produto'},
                                          context_instance=RequestContext(request))
 
-        html = render_to_string('orcamento/fields_orcamento.html', {'form': form}, context_instance=RequestContext(request))
+        html = render_to_string('orcamento/fields_orcamento.html', {'form': form},
+                                context_instance=RequestContext(request))
         html = '<script src="%sjs/orcamento.js"></script>%s' % (settings.STATIC_URL, html)
         json = simplejson.dumps({'html': unicode(html), 'html_produtos': unicode(html_produtos), 'success': False},
                             ensure_ascii=False)
@@ -84,12 +85,14 @@ def salvar(request, id=None):
             form = FormOrcamento(initial=data)
             request.session['itens_orcamento'] = orcamento.get_itens()
 
-            return render(request, 'orcamento/orcamento.html', {'form': form, 'formItem': formItem, 'id': id, 'formPesquisa': FormPesquisa(), 'orcamento': orcamento})
+            return render(request, 'orcamento/orcamento.html', {'form': form, 'formItem': formItem, 'id': id,
+                                                                'formPesquisa': FormPesquisa(), 'orcamento': orcamento})
         else:
             request.session['itens_orcamento'] = []
             form = FormOrcamento()
 
-    return render(request, 'orcamento/orcamento.html', {'form': form, 'formItem': formItem, 'id': id, 'formPesquisa': FormPesquisa()})
+    return render(request, 'orcamento/orcamento.html', {'form': form, 'formItem': formItem, 'id': id,
+                                                        'formPesquisa': FormPesquisa()})
 
 
 @csrf_exempt
@@ -100,11 +103,9 @@ def add_produto(request):
         form = FormItem(request.POST)
 
         if form.is_valid():
-            print 'request.POST[produto] : ', request.POST['produto']
 
             #produto id get pelo form
             id = int(request.POST['produto'].split(' - ')[0])
-            print 'id : ',id
             _item = None
 
             for item in itens:
@@ -115,7 +116,7 @@ def add_produto(request):
                     break
 
             if _item is None:
-                _item = Item_Orcamento()
+                _item = ItemOrcamento()
                 _item.produto = Produto.objects.get(pk=id)
             else:
                 itens.remove(_item)
@@ -127,7 +128,6 @@ def add_produto(request):
                 _item.vl_desconto = 0
             _item.observacao = request.POST['observacao']
 
-            print 'len : ',len(itens)
             itens.append(_item)
             request.session['itens_orcamento'] = itens
 
@@ -172,12 +172,13 @@ def edit_produto(request):
         json = simplejson.dumps({'formhtml': unicode(formhtml)}, ensure_ascii=False)
         return HttpResponse(json, mimetype='application/json')
 
+
 @csrf_exempt
 def rm_produto(request):
 
     itens = request.session['itens_orcamento']
     remover = None
-    print 'rm produto : ', request.POST['produto_id']
+
     for item in itens:
         if item.produto.id == int(request.POST['produto_id']):
             remover = item
@@ -223,6 +224,7 @@ def consulta(request):
     orcamentos_page = Orcamento().get_page(page, valor)
 
     return render(request, 'orcamento/consulta.html', {'form': form, 'orcamentos': orcamentos_page})
+
 
 @group_required(settings.PERM_GRUPO_VENDEDOR)
 def print_orcamento(request, id):

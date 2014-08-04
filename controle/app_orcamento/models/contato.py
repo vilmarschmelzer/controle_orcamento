@@ -1,10 +1,10 @@
 from django.db import models
-from tipo_contato import Tipo_Contato
+from tipo_contato import TipoContato
 from cliente import Cliente
 
 
 class Contato(models.Model):
-    tipo_contato = models.ForeignKey(Tipo_Contato)
+    tipo_contato = models.ForeignKey(TipoContato)
     cliente = models.ForeignKey(Cliente)
     contato = models.CharField(max_length=200)
 

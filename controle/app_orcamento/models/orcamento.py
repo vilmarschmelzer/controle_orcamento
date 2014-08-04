@@ -22,12 +22,12 @@ class Orcamento(models.Model):
         self.itens = itens
 
     def get_itens(self):
-        from item_orcamento import Item_Orcamento
+        from item_orcamento import ItemOrcamento
         if not hasattr(self, 'itens'):
             if self.id == 0:
                 self.itens = []
             else:
-                self.itens = list(Item_Orcamento.objects.filter(orcamento_id=self.id).all())
+                self.itens = list(ItemOrcamento.objects.filter(orcamento_id=self.id).all())
 
         return self.itens
 
@@ -56,8 +56,11 @@ class Orcamento(models.Model):
         orcamentos = Orcamento.objects.filter()
 
         if busca is not None:
-            orcamentos = orcamentos.filter(Q(cliente__nome__icontains=busca) | Q(cliente__documento__icontains=busca))
-
+            if '%' in busca:
+                orcamentos = orcamentos.filter(Q(cliente__nome__icontains=busca) |
+                                               Q(cliente__documento__icontains=busca))
+            else:
+                orcamentos = orcamentos.filter(Q(id=busca) | Q(cliente__nome=busca) | Q(cliente__documento=busca))
         orcamentos = orcamentos.order_by('id')
         paginator = Paginator(orcamentos, settings.NR_REGISTROS_PAGINA)
         try:

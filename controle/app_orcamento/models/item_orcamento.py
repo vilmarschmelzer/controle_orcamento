@@ -3,7 +3,7 @@ from orcamento import Orcamento
 from produto import Produto
 
 
-class Item_Orcamento(models.Model):
+class ItemOrcamento(models.Model):
     orcamento = models.ForeignKey(Orcamento)
     produto = models.ForeignKey(Produto)
     vl_unitario = models.DecimalField(max_digits=10, decimal_places=2)
