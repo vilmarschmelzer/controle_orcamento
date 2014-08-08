@@ -35,6 +35,8 @@
 body{
 	line-height: 27px;
     background-color: #F5F5F5;
+    margin-left: 2px;
+    margin-right: 2px;
 }
 
 label{

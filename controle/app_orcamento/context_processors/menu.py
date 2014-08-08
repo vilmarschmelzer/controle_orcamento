@@ -11,7 +11,7 @@ def get_menu(request):
     html = ''
     if request.user.is_authenticated():
 
-        grupos_id = request.user.groups.values_list('id',flat=True).all()
+        grupos_id = request.user.groups.values_list('id', flat=True).all()
         if settings.PERM_GRUPO_ADMINISTRADOR in grupos_id:
             html += '''<li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
