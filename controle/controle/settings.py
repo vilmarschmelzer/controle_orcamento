@@ -139,14 +139,3 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.debug",
     "django.core.context_processors.static",
 )
-
-'''
-TEMPLATE_CONTEXT_PROCESSORS = (
-    "app_orcamento.context.current_site",
-    "django.core.context_processors.lazy",
-    "django.core.context_processors.settings",
-    "django.core.context_processors.request",
-    "django.core.context_processors.debug",
-    "django.core.context_processors.i18n",
-    "django.core.context_processors.static",
-)'''
