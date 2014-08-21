@@ -77,30 +77,16 @@ def salvar(request, id=None):
     else:
         contatos = []
         if id:
-            cliente = Cliente.objects.get(pk=id)
-
-            data = {'id': cliente.id,
-                    'documento': cliente.documento,
-                    'nome': cliente.nome,
-                    'rua': cliente.endereco.rua,
-                    'numero': cliente.endereco.numero,
-                    'estado': cliente.endereco.cidade.estado_id,
-                    'cidade': cliente.endereco.cidade_id,
-                    'bairro': cliente.endereco.bairro,
-                    'cep': cliente.endereco.cep,
-                    'referencia': cliente.endereco.referencia
-                    }
-            form = FormCliente(cliente.endereco.cidade.estado_id, id, initial=data)
+            form = FormCliente(None, id)
 
             request.session['index_contato'] = 0
-            contatos = list(cliente.get_contatos())
+            contatos = list(Cliente().get_contatos(id))
 
             for contato in contatos:
                 request.session['index_contato'] += 1
                 contato.index_contato = request.session['index_contato']
 
             request.session['contatos'] = contatos
-
         else:
             form = FormCliente(None, None)
 

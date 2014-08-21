@@ -1,4 +1,5 @@
 #coding: utf-8
+from libxml2 import initializeCatalog
 from django import forms
 from app_orcamento.models import Cliente, Estado, Cidade, TipoContato
 from utils.verificadorcpf import CPF
@@ -30,14 +31,36 @@ def valida_existe_cliente(documento, id=None):
     else:
         qy = Cliente.objects.filter(Q(documento=documento))
 
-    return len(qy.all())>0
+    return len(qy.all()) > 0
+
+
+from app_orcamento.models.cliente import Cliente
 
 
 class FormCliente(forms.Form):
 
     def __init__(self, estado_id, id=0, *args, **kwargs):
 
-        super(FormCliente, self).__init__(*args, **kwargs)
+        if id:
+            cliente = Cliente.objects.get(pk=id)
+
+            estado_id = cliente.endereco.cidade.estado_id
+
+            data = {'id': cliente.id,
+                    'documento': cliente.documento,
+                    'nome': cliente.nome,
+                    'rua': cliente.endereco.rua,
+                    'numero': cliente.endereco.numero,
+                    'estado': cliente.endereco.cidade.estado_id,
+                    'cidade': cliente.endereco.cidade_id,
+                    'bairro': cliente.endereco.bairro,
+                    'cep': cliente.endereco.cep,
+                    'referencia': cliente.endereco.referencia
+                    }
+            super(FormCliente, self).__init__(initial=data, *args, **kwargs)
+
+        else:
+            super(FormCliente, self).__init__(*args, **kwargs)
 
         if estado_id == '':
             estado_id = None
